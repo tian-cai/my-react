@@ -1,20 +1,16 @@
-let cleanWebpackPlugin = require("clean-webpack-plugin");
 let htmlWebpackPlugin = require("html-webpack-plugin");
-let webpack = require("webpack");
 let path = require('path')
-module.exports = {
+
+let base = {
   entry: __dirname + "/src/index.js",
   output: {
     path: __dirname + "/build",
     filename: "[name]-[hash].js"
   },
   plugins: [
-    new cleanWebpackPlugin("build/*.js"),
     new htmlWebpackPlugin({
       template: "src/index.html"
-    }),
-    new webpack.HotModuleReplacementPlugin()
-    // new webpack.optimize.UglifyJsPlugin()
+    })
   ],
   module: {
     rules: [
@@ -49,11 +45,7 @@ module.exports = {
         include: path.resolve(__dirname,"src")
       }
     ]
-  },
-  devServer: {
-    contentBase: __dirname + "/build",
-    compress: true,
-    hot: true
-  },
-  devtool: "inline-source-map"
+  }
+ 
 };
+module.exports = base;
