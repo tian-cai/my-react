@@ -1,2 +1,2 @@
 # my-react
-自己的react脚手架，支持国际化，内置react-router，antd
+使用ES6 + webpack + react + react-router4 搭建自己的react脚手架
