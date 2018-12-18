@@ -1,12 +1,25 @@
-let base = require("./webpack.config");
-let webpack = require("webpack");
-module.exports = Object.assign({},base,{
+const merge = require('webpack-merge');
+const webpack = require("webpack");
+const base = require("./webpack.config.base");
+
+module.exports = merge(base,{
+    mode:'development',
+    output: {
+        path: __dirname + "/build",
+        filename: "[name]-[hash].js"
+    },
     devServer: {
         contentBase: __dirname + "/build",
         compress: true
     },
     devtool: "inline-source-map",
-    plugins: base.plugins.concat([
-        new webpack.HotModuleReplacementPlugin()
-    ])
+    plugins: [new webpack.HotModuleReplacementPlugin()],
+    module: {
+        rules: [
+          {
+            test: /\.css$/,
+            use: ["style-loader", "css-loader", "postcss-loader"],
+          }
+        ]
+    }
 })

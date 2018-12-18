@@ -2,10 +2,8 @@ let htmlWebpackPlugin = require("html-webpack-plugin");
 let path = require('path')
 
 let base = {
-  entry: __dirname + "/src/index.js",
-  output: {
-    path: __dirname + "/build",
-    filename: "[name]-[hash].js"
+  entry: {
+    main: __dirname + "/src/index.js",
   },
   plugins: [
     new htmlWebpackPlugin({
@@ -14,21 +12,6 @@ let base = {
   ],
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader", "postcss-loader"],
-        include: path.resolve(__dirname,"src")
-      },
-      {
-        test: /\.scss$/,
-        use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
-        include: path.resolve(__dirname,"src")
-      },
-      {
-        test: /\.less$/,
-        use: ["style-loader", "css-loader", "postcss-loader", "less-loader"],
-        include: path.resolve(__dirname,"src")
-      },
       {
         test: /\.(png|jpg|svg|gif|jpeg)$/i,
         use: ["file-loader?name=[name]-[hash].[ext]"],
@@ -45,6 +28,19 @@ let base = {
         include: path.resolve(__dirname,"src")
       }
     ]
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          // 打包第三方库
+          test: /\/node_modules\//,
+          name: "vendor",
+          chunks: "all",
+          minChunks: 1
+        }
+      }
+    }
   }
  
 };
