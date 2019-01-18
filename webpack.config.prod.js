@@ -37,5 +37,15 @@ module.exports = merge(base, {
             }),
             new OptimizeCssAssetsPlugin({})
         ],
+        splitChunks: {
+            cacheGroups: {
+                style: {
+                    name: 'style',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: true
+                }
+            }
+        }
     },
 })
